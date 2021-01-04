@@ -13,16 +13,18 @@ let garb;
 let mx;
 let my;
 let me;
+let base
 
 
 function setup(){
-	createCanvas(2000, 2000)
+	base = 50
+	createCanvas(round((window.innerWidth)/base)*base-100, round(window.innerHeight/base)*base-100)
 	background(56)
 	start = [0, 0]
 	
 	s = round(random(0, 19))
 	e = round(random(0, 19))
-	end = [1900, 1900]
+	end = [width-base, height-base]
 	isStarted = false
 	garb = []
 	obstacles = []
@@ -30,9 +32,9 @@ function setup(){
 	AI = [start[0], start[1]]
 	path = [AI]
 	//console.log(path)
-	for (var y=0;y<20;y++){
-		for (var i=0;i<20;i++){
-			n = new Node(i*100, y*100)
+	for (var y=0;y<height/base;y++){
+		for (var i=0;i<width/base;i++){
+			n = new Node(i*base, y*base)
 			nodes.push(n)
 		}
 	}
@@ -49,10 +51,10 @@ function setup(){
 
 function mouseClicked() {
 	if (!isStarted){
-	mx = round(mouseX/100)*100
-	my = round(mouseY/100)*100
+	mx = round(mouseX/base)*base
+	my = round(mouseY/base)*base
 	fill(255, 255, 255)
-	rect(mx, my, 100, 100)
+	rect(mx, my, base, base)
 	let cheese = true;
 	for (var i=0;i<obstacles.length;i++){
   		
@@ -73,8 +75,8 @@ function keyPressed() {
   
 
   if (keyCode === 32) {
-  	for (var i=0;i<100;i++){
-  		obstacles.push([round(random(0, 29))*100, round(random(0, 29))*100])
+  	for (var i=0;i<base;i++){
+  		obstacles.push([round(random(0, (width-base)/100))*base, round(random(0, (height-base)/100))*base])
   	}
     //isStarted = true;
   }
@@ -84,10 +86,10 @@ function keyPressed() {
 
 function mouseDragged() {
 	if (!isStarted){
-  	mx = round(mouseX/100)*100
-	my = round(mouseY/100)*100
+  	mx = round(mouseX/base)*base
+	my = round(mouseY/base)*base
 	fill(255, 255, 255)
-	rect(mx, my, 100, 100)
+	rect(mx, my, base, base)
 
   	let cheese = true;
 	for (var i=0;i<obstacles.length;i++){
@@ -111,7 +113,7 @@ function draw(){
 
 	for (var i=0;i<obstacles.length;i++){
 			fill(255, 255, 255)
-			rect(obstacles[i][0], obstacles[i][1], 100, 100)
+			rect(obstacles[i][0], obstacles[i][1], base, base)
 	}
 
 
@@ -136,20 +138,20 @@ function draw(){
 		reCheck()
 		//console.log(path.length)
 
-		if (nd <= 100){
+		if (nd <= base){
 			me = nodes[garb[garb.length-1]];
 			//background(56)
 			for (var i=0;i<obstacles.length;i++){
 			fill(255, 255, 255)
-			rect(obstacles[i][0], obstacles[i][1], 100, 100)
+			rect(obstacles[i][0], obstacles[i][1], base, base)
 	}
 
 			fill(255, 0, 0)
-			rect(end[0], end[1], 100, 100)
+			rect(end[0], end[1], base, base)
 			for (var i=garb.length-1;i>=0;i--){
 
 				fill(255, 255, 0)
-				rect(me.x, me.y, 100, 100)
+				rect(me.x, me.y, base, base)
 				me = nodes[me.myCheese]
 			}
 			noLoop()
@@ -160,18 +162,18 @@ function draw(){
 	}
 	
 	else{
-	mx = round(mouseX/100)*100
-	my = round(mouseY/100)*100
+	mx = round(mouseX/base)*base
+	my = round(mouseY/base)*base
 	fill(255, 255, 255)
-	rect(mx, my, 100, 100)
+	rect(mx, my, base, base)
 
 	if (keyIsDown(BACKSPACE)){
-		mx = round(mouseX/100)*100
-	my = round(mouseY/100)*100
+		mx = round(mouseX/base)*base
+	my = round(mouseY/base)*base
 
   	for (var i=0;i<obstacles.length;i++){
   		fill(0, 0, 255)
-  		rect(mx, my, 100, 100)
+  		rect(mx, my, base, base)
       	if (obstacles[i][0] == mx && obstacles[i][1] == my){
       			obstacles.splice(i, 1)
       			}
@@ -189,10 +191,10 @@ function draw(){
 function do_stuff(){
 	//GET THE SURROUNDING NODES
 	fill(0, 255, 0)
-	rect(AI[0], AI[1], 100, 100)
+	rect(AI[0], AI[1], base, base)
 
 	fill(255, 0, 0)
-	rect(end[0], end[1], 100, 100)
+	rect(end[0], end[1], base, base)
 
 	
 
@@ -238,10 +240,10 @@ function reCheck(){
 	let best = 0;
 	for (var e=0;e<path.length;e++){
 		fill(0, 255, 0)
-		rect(path[e][0], path[e][1], 100, 100)
+		rect(path[e][0], path[e][1], base, base)
 
 		fill(255, 0, 0)
-		rect(end[0], end[1], 100, 100)
+		rect(end[0], end[1], base, base)
 		
 		
 		//console.log(nd)
@@ -251,7 +253,7 @@ function reCheck(){
 			//nodes[i].update(obstacles)
 
 			var d = dist(path[e][0]+50, path[e][1]+50, nodes[i].realX, nodes[i].realY)
-			if (d < 120 && d > 0){
+			if (d < base+10 && d > 0){
 				if (nodes[i].fcost < lowest_fcost){
 					lowest_fcost = nodes[i].fcost
 					best = i
@@ -320,7 +322,7 @@ class Node{
 		fill(0, 0, 255)
 		strokeWeight(4);
 		stroke(0, 0, 255);
-		rect(this.x, this.y, 100, 100)
+		rect(this.x, this.y, base, base)
 		}
 		
 	}
