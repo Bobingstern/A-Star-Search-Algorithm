@@ -13,4 +13,8 @@ Run Algorithm: Enter
 
 Erase Block: Backspace
 
+Move Start Point (Green Box): S
+
+Move End Point (Red Box): E
+
 Make sure to zoom out if it doesn't fit your screen
