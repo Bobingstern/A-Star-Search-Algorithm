@@ -29,8 +29,7 @@ function setup(){
 	garb = []
 	obstacles = []
 
-	AI = [start[0], start[1]]
-	path = [AI]
+	
 	//console.log(path)
 	for (var y=0;y<height/base;y++){
 		for (var i=0;i<width/base;i++){
@@ -69,8 +68,11 @@ function mouseClicked() {
 }	
 
 function keyPressed() {
+
   if (keyCode === ENTER) {
     isStarted = true;
+    AI = [start[0], start[1]]
+	path = [AI]
   }
   
 
@@ -79,6 +81,18 @@ function keyPressed() {
   		obstacles.push([round(random(0, (width-base)/100))*base, round(random(0, (height-base)/100))*base])
   	}
     //isStarted = true;
+  }
+  if (keyCode == 69){
+  	mx = round(mouseX/base)*base
+	my = round(mouseY/base)*base
+	
+	end = [mx, my]
+  }
+  if (keyCode == 83){
+  	mx = round(mouseX/base)*base
+	my = round(mouseY/base)*base
+	
+	start = [mx, my]
   }
   
 }
@@ -107,6 +121,7 @@ function mouseDragged() {
 function draw(){
 	if (!isStarted){
 		background(56)
+		
 		
 	}
 
@@ -184,55 +199,17 @@ function draw(){
 
 	
 	}
-	
-}
 
-
-function do_stuff(){
-	//GET THE SURROUNDING NODES
 	fill(0, 255, 0)
-	rect(AI[0], AI[1], base, base)
+		rect(start[0], start[1], base, base)
 
-	fill(255, 0, 0)
-	rect(end[0], end[1], base, base)
-
+		fill(255, 0, 0)
+		rect(end[0], end[1], base, base)
 	
-
-	
-
-	let lowest_fcost = 100000000000;
-	let best = 0;
-	
-	console.log(nd)
-
-	 
-	for (var i=0;i<nodes.length;i++){
-		nodes[i].update(obstacles)
-
-		var d = dist(AI[0]+50, AI[1]+50, nodes[i].realX, nodes[i].realY)
-		if (d < 200 && d > 0){
-			if (nodes[i].fcost < lowest_fcost){
-				lowest_fcost = nodes[i].fcost
-				best = i
-			}	
-		}
-	}
-
-
-	AI = [nodes[best].x, nodes[best].y]
-
-
-	nodes[best].can_cal = false
-	nodes[best].fcost = 1000000000000000000000000
-	path.push(AI)
-	
-
-
-	//Re check some shit
-
-
-
 }
+
+
+
 
 
 function reCheck(){
