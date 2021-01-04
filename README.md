@@ -3,6 +3,8 @@ A* Search Algorithm visualized with p5js
 
 Here is the [demo ](https://bobingstern.github.io/A-Star-Search-Algorithm/AStar/index.html)
 
+Here is the second [visualization](https://bobingstern.github.io/A-Star-Search-Algorithm/AStar-Vis2/index.html)
+
 # Controls:
 
 Generate Random Maze: Space
