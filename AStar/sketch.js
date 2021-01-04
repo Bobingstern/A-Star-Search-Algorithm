@@ -17,7 +17,7 @@ let base
 
 
 function setup(){
-	base = 50
+	base = 80
 	createCanvas(round((window.innerWidth)/base)*base-100, round(window.innerHeight/base)*base-100)
 	background(56)
 	start = [0, 0]
