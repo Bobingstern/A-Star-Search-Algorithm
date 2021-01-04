@@ -8,32 +8,43 @@ let obstacles = []
 let nd
 let path = []
 let isStarted
-
+let garb;
 
 let mx;
 let my;
+let me;
 
 
 function setup(){
 	createCanvas(2000, 2000)
 	background(56)
 	start = [0, 0]
+	
 	s = round(random(0, 19))
 	e = round(random(0, 19))
 	end = [1900, 1900]
 	isStarted = false
-	
+	garb = []
 	obstacles = []
 
 	AI = [start[0], start[1]]
 	path = [AI]
-
+	//console.log(path)
 	for (var y=0;y<20;y++){
 		for (var i=0;i<20;i++){
 			n = new Node(i*100, y*100)
 			nodes.push(n)
 		}
 	}
+
+	for (var i=0;i<nodes.length;i++){
+			//nodes[i].show()
+			nodes[i].update(obstacles)
+			//nodes[i].caluclate_shit(start[0], start[1], end[0], end[1])
+			
+		}
+
+	me = nodes[0]
 }
 
 function mouseClicked() {
@@ -78,10 +89,13 @@ function draw(){
 		background(56)
 	}
 
+
 	for (var i=0;i<obstacles.length;i++){
 			fill(255, 255, 255)
 			rect(obstacles[i][0], obstacles[i][1], 100, 100)
 	}
+
+
 
 
 
@@ -91,9 +105,7 @@ function draw(){
 		
 
 
-		if (nd == 0){
-			noLoop()
-		}
+		
 		for (var i=0;i<nodes.length;i++){
 			//nodes[i].show()
 			nodes[i].update(obstacles)
@@ -101,7 +113,31 @@ function draw(){
 			
 		}
 		//do_stuff()
+
 		reCheck()
+		//console.log(path.length)
+
+		if (nd <= 100){
+			me = nodes[garb[garb.length-1]];
+			//background(56)
+			for (var i=0;i<obstacles.length;i++){
+			fill(255, 255, 255)
+			rect(obstacles[i][0], obstacles[i][1], 100, 100)
+	}
+
+			fill(255, 0, 0)
+			rect(end[0], end[1], 100, 100)
+			for (var i=garb.length-1;i>=0;i--){
+
+				fill(255, 255, 0)
+				rect(me.x, me.y, 100, 100)
+				me = nodes[me.myCheese]
+			}
+			noLoop()
+		}
+		//console.log(nd)
+		
+
 	}
 	
 	else{
@@ -111,7 +147,7 @@ function draw(){
 	rect(mx, my, 100, 100)
 
 	
-}
+	}
 	
 }
 
@@ -185,6 +221,9 @@ function reCheck(){
 				if (nodes[i].fcost < lowest_fcost){
 					lowest_fcost = nodes[i].fcost
 					best = i
+					//garb.push([nodes[i].x, nodes[i].y])
+					AI = path[e]
+					
 					
 				}	
 			}
@@ -192,11 +231,20 @@ function reCheck(){
 		
 	}
 
+	var AI_index
 
+	for (var i=0;i<nodes.length;i++){
+		if (nodes[i].x == AI[0] && nodes[i].y == AI[1]){
+			AI_index = i
+			break
+		}
+	}
 
+	nodes[best].myCheese = AI_index
+	garb.push(AI_index)
 	AI = [nodes[best].x, nodes[best].y]
-
-
+	
+	
 	nodes[best].can_cal = false
 	nodes[best].fcost = 1000000000000000000000000
 	path.push(AI)
@@ -214,6 +262,7 @@ class Node{
 		this.hcost
 		this.fcost
 		this.can_cal = true
+		this.myCheese
 
 	}
 
