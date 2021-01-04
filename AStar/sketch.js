@@ -53,8 +53,16 @@ function mouseClicked() {
 	my = round(mouseY/100)*100
 	fill(255, 255, 255)
 	rect(mx, my, 100, 100)
-
-  	obstacles.push([mx, my])
+	let cheese = true;
+	for (var i=0;i<obstacles.length;i++){
+  		
+      	if (obstacles[i][0] == mx && obstacles[i][1] == my){
+      			cheese = false
+      			}
+      		}
+      if (cheese){
+  		obstacles.push([mx, my])
+  	}
   }
 }	
 
@@ -62,6 +70,7 @@ function keyPressed() {
   if (keyCode === ENTER) {
     isStarted = true;
   }
+  
 
   if (keyCode === 32) {
   	for (var i=0;i<100;i++){
@@ -80,13 +89,23 @@ function mouseDragged() {
 	fill(255, 255, 255)
 	rect(mx, my, 100, 100)
 
-  	obstacles.push([mx, my])
+  	let cheese = true;
+	for (var i=0;i<obstacles.length;i++){
+  		
+      	if (obstacles[i][0] == mx && obstacles[i][1] == my){
+      			cheese = false
+      			}
+      		}
+      if (cheese){
+  		obstacles.push([mx, my])
+  	}
   }
 }
 
 function draw(){
 	if (!isStarted){
 		background(56)
+		
 	}
 
 
@@ -145,6 +164,21 @@ function draw(){
 	my = round(mouseY/100)*100
 	fill(255, 255, 255)
 	rect(mx, my, 100, 100)
+
+	if (keyIsDown(BACKSPACE)){
+		mx = round(mouseX/100)*100
+	my = round(mouseY/100)*100
+
+  	for (var i=0;i<obstacles.length;i++){
+  		fill(0, 0, 255)
+  		rect(mx, my, 100, 100)
+      	if (obstacles[i][0] == mx && obstacles[i][1] == my){
+      			obstacles.splice(i, 1)
+      			}
+      		}
+	}
+
+	
 
 	
 	}
