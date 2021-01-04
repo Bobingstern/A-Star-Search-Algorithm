@@ -1,7 +1,7 @@
 # A-Star-Search-Algorithm
 A* Search Algorithm visualized with p5js 
 
-Here is the [demo ](https://bobingstern.github.io/A-Star-Search-Algorithm/AStar/)
+Here is the [demo ](https://bobingstern.github.io/A-Star-Search-Algorithm/AStar/index.html)
 
 # Controls:
 
