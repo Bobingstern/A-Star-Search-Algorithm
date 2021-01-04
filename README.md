@@ -10,3 +10,5 @@ Generate Random Maze: Space
 Place block: Left Click
 
 Run Algorithm: Enter
+
+Make sure to zoom out if it doesn't fit your screen
