@@ -5,6 +5,8 @@ Here is the [demo ](https://bobingstern.github.io/A-Star-Search-Algorithm/AStar/
 
 Here is the second [visualization](https://bobingstern.github.io/A-Star-Search-Algorithm/AStar-Vis2/index.html)
 
+Here is the optimized [visualization](https://bobingstern.github.io/A-Star-Search-Algorithm/AStar-Optimized/index.html)
+
 # Controls:
 
 Generate Random Maze: Space
