@@ -7,6 +7,8 @@ Here is the second [visualization](https://bobingstern.github.io/A-Star-Search-A
 
 Here is the optimized [visualization](https://bobingstern.github.io/A-Star-Search-Algorithm/AStar-Optimized/index.html)
 
+For large scale grids make sure to use the optimzed version.
+
 # Controls:
 
 Generate Random Maze: Space
