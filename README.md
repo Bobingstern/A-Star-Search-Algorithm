@@ -21,4 +21,4 @@ Move Start Point (Green Box): S
 
 Move End Point (Red Box): E
 
-Make sure to zoom out if it doesn't fit your screen
+Zoom out for a bigger grid
