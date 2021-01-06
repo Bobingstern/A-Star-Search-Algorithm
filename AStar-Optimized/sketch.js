@@ -304,7 +304,7 @@ function reCheck(){
 		for (var j=0;j<nodes[node2d[i]].adjacent.length;j++){
 			if (nodes[nodes[node2d[i]].adjacent[j]].can_cal == true){
 				can_bong = true
-				fill(0, 0, 255)
+				fill(151, 203, 255)
 				rect(nodes[nodes[node2d[i]].adjacent[j]].x, nodes[nodes[node2d[i]].adjacent[j]].y, base, base)
 				//path.push(AI)
 			}
