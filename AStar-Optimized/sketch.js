@@ -356,9 +356,6 @@ function Maze(){
 
 
 
-
-}
-
 class Cell{
   constructor(x, y){
     this.x = x
