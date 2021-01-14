@@ -121,7 +121,7 @@ function keyPressed() {
 
   if (keyCode == 16) {
     obstacles = []
-    generateMaze()
+    Maze()
   }
 
 }
@@ -318,30 +318,40 @@ function reCheck() {
 
 
 }
-
-function generateMaze() {
-  let cells = []
-
-  for (var i=0;i<nodes.length;i++){
-    let cell = new Cell(nodes[i].x, nodes[i].y)
-
-    cells.push(cell)
-    //obstacles.push([nodes[i].x, nodes[i].y])
-
-
-  }
-
-
-  let carve = []
-  for (var i=0;i<cells.length;i++){
-    if (i % 2 == 0){
-    if (round(random(1, 2)) == 1){
-      obstacles.push([cells[i].x, cells[i].y-base])
-    }
-    else{
-      obstacles.push([cells[i].x-base, cells[i].y])
+function getFromCoord(arr, x, y){
+  for (var i=0;i<arr.length;i++){
+    if (arr[i][0] == x && arr[i][1] == y){
+      return i
     }
   }
+}
+
+function Maze(){
+  W = width/base
+  H = height/base
+  
+  
+  for (var x=0;x<W;x++){
+    for (var y=0;y<H;y++){
+      obstacles.push([x*base, y*base])
+      
+    }
+  }
+  
+  for (var i=obstacles.length-1;i>0;i--){
+    if ((obstacles[i][0]/base) % 2 != 0 && (obstacles[i][1]/base) % 2 != 0){
+      obstacles.splice(i, 1)
+    }
+  }
+  
+  
+  for (var i=obstacles.length-1;i>=0;i--){
+    //console.log(maze[i])
+    if (round(random(0, 1)) == 0){
+      obstacles.splice(getFromCoord(obstacles, obstacles[i][0], obstacles[i][1]), 1)
+    }
+  }
+  
 }
 
 
