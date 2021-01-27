@@ -301,7 +301,7 @@ function reCheck() {
     //console.log(nodes[best].adjacent.length)
     for (var j = 0; j < nodes[node2d[i]].adjacent.length; j++) {
       if (nodes[nodes[node2d[i]].adjacent[j]].can_cal == true) {
-        fill(151, 203, 255)
+        fill(0, 0, 255)
         rect(nodes[nodes[node2d[i]].adjacent[j]].x, nodes[nodes[node2d[i]].adjacent[j]].y, base, base)
         can_bong = true
 
