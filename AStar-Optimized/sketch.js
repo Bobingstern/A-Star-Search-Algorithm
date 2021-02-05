@@ -268,8 +268,8 @@ function reCheck() {
     for (var i = 0; i < nodes.length; i++) {
       //nodes[i].update(obstacles)
 
-      var d = dist(path[e][0] + 50, path[e][1] + 50, nodes[i].realX, nodes[i].realY)
-      if (d < base + 10 && d > 0) {
+      var d = dist(path[e][0] + base/2, path[e][1] + base/2, nodes[i].realX, nodes[i].realY)
+      if (d < base + base/10 && d > 0) {
         total_adjacent--
         if (nodes[i].fcost < lowest_fcost) {
           lowest_fcost = nodes[i].fcost
