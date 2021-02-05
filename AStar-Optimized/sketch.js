@@ -210,7 +210,7 @@ function draw() {
       for (var i = garb.length - 1; i >= 0; i--) {
 
         fill(255, 255, 0)
-        rect(me.x, me.y, base, base)
+        rect(me.x, me.y, base/1.5, base/1.5)
         me = nodes[me.myCheese]
       }
       noLoop()
@@ -230,7 +230,7 @@ function draw() {
 
       for (var i = 0; i < obstacles.length; i++) {
         fill(0, 0, 255)
-        rect(mx, my, base, base)
+        rect(mx, my, base/2, base/2)
         if (obstacles[i][0] == mx && obstacles[i][1] == my) {
           obstacles.splice(i, 1)
         }
