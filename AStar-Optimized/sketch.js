@@ -329,29 +329,34 @@ function getFromCoord(arr, x, y){
 function Maze(){
   W = width/base
   H = height/base
+  let stack = []
   
   
   for (var x=0;x<W;x++){
     for (var y=0;y<H;y++){
-      obstacles.push([x*base, y*base])
+      if (x%2==0 && y%2==0){
+        rudn1 = x*base+base*2
+        rudn2 = y*base+base*2
+        //console.log(rudn2)
+        thes = []
+        if (round(random(0, 1)) == 0 && rudn1<width-base){
+          
+          maze.push([rudn1, y*base])
+          maze.push([rudn1-base, y*base])
+        }
+        else{
+          maze.push([x*base, rudn2])
+          maze.push([x*base, rudn2-base])
+        }
+      }
+      
       
     }
   }
   
-  for (var i=obstacles.length-1;i>0;i--){
-    if ((obstacles[i][0]/base) % 2 != 0 && (obstacles[i][1]/base) % 2 != 0){
-      obstacles.splice(i, 1)
-    }
-  }
   
   
-  for (var i=obstacles.length-1;i>=0;i--){
-    //console.log(maze[i])
-    if (round(random(0, 1)) == 0){
-      obstacles.splice(getFromCoord(obstacles, obstacles[i][0], obstacles[i][1]), 1)
-    }
-  }
-  
+
 }
 
 
