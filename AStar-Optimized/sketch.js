@@ -341,12 +341,12 @@ function Maze(){
         thes = []
         if (round(random(0, 1)) == 0 && rudn1<width-base){
           
-          maze.push([rudn1, y*base])
-          maze.push([rudn1-base, y*base])
+          obstacles.push([rudn1, y*base])
+          obstacles.push([rudn1-base, y*base])
         }
         else{
-          maze.push([x*base, rudn2])
-          maze.push([x*base, rudn2-base])
+          obstacles.push([x*base, rudn2])
+          obstacles.push([x*base, rudn2-base])
         }
       }
       
