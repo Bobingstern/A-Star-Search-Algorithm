@@ -199,7 +199,7 @@ function draw() {
 
     if (nd <= base) {
       me = nodes[garb[garb.length - 1]];
-      //background(56)
+      background(56)
       for (var i = 0; i < obstacles.length; i++) {
         fill(255, 255, 255)
         rect(obstacles[i][0], obstacles[i][1], base, base)
