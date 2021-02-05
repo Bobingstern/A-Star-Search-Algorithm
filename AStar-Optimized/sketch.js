@@ -98,6 +98,20 @@ function keyPressed() {
     AI = [start[0], start[1]]
     path = [AI]
   }
+  
+  if (keyCode === 67){
+    obstacles = []
+  }
+  
+  if (keyCode === 38){
+    obstacles = []
+    base += 10
+  }
+  
+  if (keyCode === 40){
+    obstacles = []
+   base -= 10 
+  }
 
 
   if (keyCode === 32) {
