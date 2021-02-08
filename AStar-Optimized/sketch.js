@@ -12,13 +12,61 @@ let garb;
 let mx;
 let my;
 let me;
-let base
 let huh
 
 let node2d
 let nodesTemp;
-let stack = []
 
+
+let base = 10
+let maze = []
+
+
+let cells = [];
+let w;
+let h;
+
+let currCell;
+let stack = [];
+
+let done = false;
+
+
+function Cell(x, y){
+  this.x = x;
+  this.y = y;
+  this.isWall = true;
+  
+  this.getRandomNeighbour = function(){
+    let neighbours = [];
+    
+    let top = cells[this.x][this.y-2]; //top
+    let right = cells[this.x+2][this.y]; //right
+    let bottom = cells[this.x][this.y+2]; //bottom
+    let left = cells[this.x-2][this.y]; //left
+    
+    if(top && top.isWall){ //top
+      neighbours.push(top);
+    }
+    if(right && right.isWall){ //right
+      neighbours.push(right);
+    }
+    if(bottom && bottom.isWall){ //bottom
+      neighbours.push(bottom);
+    }
+    if(left && left.isWall){ //left
+      neighbours.push(left);
+    }
+    
+    if(neighbours.length > 0){
+      let randomIndex = Math.floor(Math.random()*neighbours.length);
+      let randomNeighbour = neighbours[randomIndex];
+      return randomNeighbour;
+    }else{
+      return null;
+    }
+  }
+}
 
 
 
@@ -26,13 +74,13 @@ function setup() {
   base = 100
   createCanvas(round((window.innerWidth) / base) * base - 100, round(window.innerHeight / base) * base - 100)
   background(56)
-  start = [0, 0]
+  start = [base, base]
   huh = false;
   node2d = [0]
   nodesTemp = []
   s = round(random(0, 19))
   e = round(random(0, 19))
-  end = [width - base, height - base]
+  end = [width - base*3, height - base*3]
   isStarted = false
   garb = []
   obstacles = []
@@ -66,6 +114,28 @@ function setup() {
     }
   }
   me = nodes[0]
+
+
+
+  w = Math.floor(width / base / 2) * 2 - 1;
+  h = Math.floor(height / base / 2) * 2 - 1;
+  
+  // initialize cells
+  for(let x=0; x<w; x++){
+    cells[x] = [];
+    for(let y=0; y<h; y++){
+      cells[x][y] = new Cell(x, y);
+    }
+  }
+  // fix invalid neighbour indexing problem
+  cells[-1] = [];
+  cells[-2] = [];
+  cells[w] = [];
+  cells[w+1] = [];
+  
+  // initialize starting cell
+  currCell = cells[1][1];
+  
 
 }
 
@@ -103,15 +173,7 @@ function keyPressed() {
     obstacles = []
   }
   
-  if (keyCode === 38){
-    obstacles = []
-    base += 10
-  }
   
-  if (keyCode === 40){
-    obstacles = []
-   base -= 10 
-  }
 
 
   if (keyCode === 32) {
@@ -135,7 +197,9 @@ function keyPressed() {
 
   if (keyCode == 16) {
     obstacles = []
+    while (!done){
     Maze()
+  }
   }
 
 }
@@ -210,7 +274,7 @@ function draw() {
       for (var i = garb.length - 1; i >= 0; i--) {
 
         fill(255, 255, 0)
-        rect(me.x, me.y, base/1.5, base/1.5)
+        rect(me.x, me.y, base, base)
         me = nodes[me.myCheese]
       }
       noLoop()
@@ -332,57 +396,95 @@ function reCheck() {
 
 
 }
-function getFromCoord(arr, x, y){
-  for (var i=0;i<arr.length;i++){
-    if (arr[i][0] == x && arr[i][1] == y){
-      return i
-    }
+
+
+function removeWalls(cell1, cell2){
+  let x = (cell1.x + cell2.x) / 2;
+  let y = (cell1.y + cell2.y) / 2;
+  cells[x][y].isWall = false;
+}
+
+function iterate(){
+  currCell.isWall = false;
+  
+  let next = currCell.getRandomNeighbour();
+  
+  if(next){
+    stack.push(currCell);
+    
+    removeWalls(currCell, next); // remove walls between cells
+    
+    currCell = next;
+  }else if(stack.length > 0){
+    currCell = stack.pop();
+  }else{
+    console.log("DONE!");
+    console.log("width = "+w+", height = "+h);
+    getWallCoordinates();
+    done = true;
   }
 }
+
+function getWallCoordinates(){
+  let walls = [];
+  for(let x=0; x<w; x++){
+    for(let y=0; y<h; y++){
+      let cell = cells[x][y];
+      if(cell.isWall){
+        walls.push([cell.x, cell.y]);
+      }
+    }
+  }
+  
+  let str = "[";
+  for(let i=0; i<walls.length; i++){
+    str += "[";
+    str += walls[i][0];
+    str += ",";
+    str += walls[i][1];
+    str += "], ";
+  }
+  str = str.substring(0, str.length-2);
+  str += "]";
+  obstacles = []
+  for (var i=0;i<walls.length;i++){
+    obstacles.push([walls[i][0]*base, walls[i][1]*base])
+  }
+  
+}
+
 
 function Maze(){
-  W = width/base
-  H = height/base
-  let stack = []
-  
-  
-  for (var x=0;x<W;x++){
-    for (var y=0;y<H;y++){
-      if (x%2==0 && y%2==0){
-        rudn1 = x*base+base*2
-        rudn2 = y*base+base*2
-        //console.log(rudn2)
-        thes = []
-        if (round(random(0, 1)) == 0 && rudn1<width-base){
-          
-          obstacles.push([rudn1, y*base])
-          obstacles.push([rudn1-base, y*base])
-        }
-        else{
-          obstacles.push([x*base, rudn2])
-          obstacles.push([x*base, rudn2-base])
-        }
+  if(!done){
+    for(let i=0; i<1000; i++){
+      if(!done){
+        iterate();
       }
-      
-      
     }
   }
   
-  
-  
-
-}
-
-
-
-class Cell{
-  constructor(x, y){
-    this.x = x
-    this.y = y
-    this.has_visited = false
-    this.neigbors = []
+  // draw cells
+  for(let x=0; x<w; x++){
+    for(let y=0; y<h; y++){
+      let cell = cells[x][y];
+      let drawX = cell.x * base;
+      let drawY = cell.y * base;
+      // draw cell
+      if(cell == currCell && !done){
+        fill(0, 255, 0);
+      }else if(cell.isWall){
+        fill(0);
+      }else{
+        fill(255);
+      }
+      noStroke();
+      //rect(drawX, drawY, cellSize, cellSize);
+    }
   }
 }
+
+
+
 
 
 
