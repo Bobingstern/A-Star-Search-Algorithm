@@ -24,6 +24,6 @@ Move Start Point (Green Box): S
 Move End Point (Red Box): E
 
 
-The optimized version has an auto maze feture that you can use by pressing the left shift key but is still under development and will usually never have have a path to the end so you will have to erase some blocks to make one
+The optimized version has an auto maze feature that you can use by pressing the left shift key but you may have to move the start and end point to fit inside the maze
 
 Zoom out for a bigger grid
