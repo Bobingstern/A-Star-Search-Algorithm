@@ -72,7 +72,7 @@ function Cell(x, y){
 
 function setup() {
   base = 100
-  createCanvas(round((window.innerWidth*1.5) / base) * base - 100, round(window.innerHeight*1.5 / base) * base - 100)
+  createCanvas(round((window.innerWidth) / base) * base - 100, round(window.innerHeight / base) * base - 100)
   background(56)
   start = [base, base]
   huh = false;
