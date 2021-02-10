@@ -68,12 +68,7 @@ function Cell(x, y){
   }
 }
 
-
-
-function setup() {
-  base = 100
-  createCanvas(round((window.innerWidth) / base) * base - 100, round(window.innerHeight / base) * base - 100)
-  background(56)
+function fuckUp(){
   start = [base, base]
   huh = false;
   node2d = [0]
@@ -106,7 +101,7 @@ function setup() {
     //nodes[i].caluclate_shit(start[0], start[1], end[0], end[1])
 
   }
-  var W = width/base
+  var W = Math.floor(width/base)
   console.log(W)
   for (var i = 0; i < nodes.length; i++) {
     if (i > 0){
@@ -148,6 +143,13 @@ function setup() {
   // initialize starting cell
   currCell = cells[1][1];
   
+}
+
+function setup() {
+  base = 50
+  createCanvas(round((window.innerWidth) / base) * base - 100, round(window.innerHeight / base) * base - 100)
+  background(56)
+  fuckUp()
 
 }
 
@@ -207,12 +209,43 @@ function keyPressed() {
     start = [mx, my]
   }
 
+  if (keyCode == 38){
+    base = 50
+    fuckUp()
+  }
+
+  if (keyCode == 40){
+    base = 100
+    fuckUp()
+  }
+
   if (keyCode == 16) {
     obstacles = []
     done = false
     while (!done){
-    Maze()
+      let cells = [];
+      
+
+      
+      let stack = [];
+
+      let done = false;
+      for(let x=0; x<w; x++){
+    cells[x] = [];
+    for(let y=0; y<h; y++){
+      cells[x][y] = new Cell(x, y);
+    }
   }
+  // fix invalid neighbour indexing problem
+  cells[-1] = [];
+  cells[-2] = [];
+  cells[w] = [];
+  cells[w+1] = [];
+  
+  // initialize starting cell
+  currCell = cells[1][1];
+      Maze()
+    }
   }
 
 }
@@ -307,7 +340,7 @@ function draw() {
 
       for (var i = 0; i < obstacles.length; i++) {
         fill(0, 0, 255)
-        rect(mx, my, base/2, base/2)
+        rect(mx, my, base, base)
         if (obstacles[i][0] == mx && obstacles[i][1] == my) {
           obstacles.splice(i, 1)
         }
@@ -532,8 +565,8 @@ class Node {
         this.fcost = 10000000000000000
       }
     }
-    this.realX = this.x + 50
-    this.realY = this.y + 50
+    this.realX = this.x + base/2
+    this.realY = this.y + base/2
 
 
   }
