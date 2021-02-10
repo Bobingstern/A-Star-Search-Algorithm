@@ -18,7 +18,7 @@ let node2d
 let nodesTemp;
 
 
-let base = 10
+let base = 100
 let maze = []
 
 
@@ -87,12 +87,14 @@ function setup() {
 
 
   //console.log(path)
+  var dsa = 0
   for (var y = 0; y < height / base; y++) {
 
     for (var i = 0; i < width / base; i++) {
       n = new Node(i * base, y * base)
 
-      nodes.push(n)
+      nodes[dsa] = n
+      dsa++
     }
 
   }
@@ -104,13 +106,23 @@ function setup() {
     //nodes[i].caluclate_shit(start[0], start[1], end[0], end[1])
 
   }
-
+  var W = width/base
+  console.log(W)
   for (var i = 0; i < nodes.length; i++) {
-    for (var j = 0; j < nodes.length; j++) {
-      var d = dist(nodes[i].x + 50, nodes[i].y + 50, nodes[j].x + 50, nodes[j].y + 50)
-      if (d < base + 10 && d > 0 && i != j) {
-        nodes[j].adjacent.push(i)
-      }
+    if (i > 0){
+      nodes[i].adjacent.push(i-1)
+    }
+
+    if (i < nodes.length-1){
+      nodes[i].adjacent.push(i+1)
+    }
+
+    if (i > W){
+      nodes[i].adjacent.push(i-W)
+    }
+
+    if (i < nodes.length-W){
+      nodes[i].adjacent.push(i+W)
     }
   }
   me = nodes[0]
@@ -197,6 +209,7 @@ function keyPressed() {
 
   if (keyCode == 16) {
     obstacles = []
+    done = false
     while (!done){
     Maze()
   }
@@ -372,8 +385,8 @@ function reCheck() {
 
   path.push(AI)
   node2d.push(best)
-  console.log(path.length)
-  console.log(node2d.length)
+  //console.log(path.length)
+  //console.log(node2d.length)
   for (var i = 0; i < path.length; i++) {
     let can_bong = false;
     //console.log(nodes[best].adjacent.length)
