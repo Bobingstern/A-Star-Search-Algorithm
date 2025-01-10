@@ -374,7 +374,7 @@ class Node{
 		if (this.can_cal){
 			this.gcost = dist(sx, sy, this.x, this.y)
 			this.hcost = dist(ex, ey, this.x, this.y)
-			this.fcost = this.hcost
+			this.fcost = this.hcost + this.gcost
 		}
 
 
